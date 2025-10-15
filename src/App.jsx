@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
         try {
           const data = JSON.parse(event.data);
           addMessage('message', data);
-        } catch (e) {
+        } catch {
           addMessage('message', event.data);
         }
       };
