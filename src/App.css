@@ -257,6 +257,12 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.message-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .message-type {
   font-size: 0.75rem;
   font-weight: 700;
@@ -279,6 +285,29 @@
   font-size: 0.75rem;
   color: #6a6a7a;
   font-family: 'Courier New', monospace;
+}
+
+.btn-copy {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.2);
+  color: #667eea;
+  border: 1px solid #667eea;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-copy:hover {
+  background: rgba(102, 126, 234, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-copy:active {
+  transform: translateY(0);
 }
 
 .message-content {
