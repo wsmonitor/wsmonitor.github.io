@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
 
 function App() {
@@ -6,6 +6,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState('Disconnected');
+  const [copiedIndex, setCopiedIndex] = useState(null);
   const wsRef = useRef(null);
 
   const connectWebSocket = () => {
@@ -42,7 +43,7 @@ function App() {
         try {
           const data = JSON.parse(event.data);
           addMessage('message', data);
-        } catch (e) {
+        } catch {
           addMessage('message', event.data);
         }
       };
@@ -86,6 +87,17 @@ function App() {
       return JSON.stringify(content, null, 2);
     }
     return content;
+  };
+
+  const copyToClipboard = async (content, index) => {
+    try {
+      const textToCopy = formatMessage(content);
+      await navigator.clipboard.writeText(textToCopy);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
   };
 
   return (
@@ -141,7 +153,16 @@ function App() {
               <div key={index} className={`message message-${msg.type}`}>
                 <div className="message-header">
                   <span className="message-type">{msg.type.toUpperCase()}</span>
-                  <span className="message-timestamp">{msg.timestamp}</span>
+                  <div className="message-header-right">
+                    <button
+                      className="btn-copy"
+                      onClick={() => copyToClipboard(msg.content, index)}
+                      title="Copy message to clipboard"
+                    >
+                      {copiedIndex === index ? '✓ Copied' : 'Copy'}
+                    </button>
+                    <span className="message-timestamp">{msg.timestamp}</span>
+                  </div>
                 </div>
                 <pre className="message-content">{formatMessage(msg.content)}</pre>
               </div>
